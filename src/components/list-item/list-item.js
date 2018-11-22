@@ -4,34 +4,10 @@ import './list-item.css';
 
 export default class ListItem extends Component {
 
-    constructor() {
-        super();
-
-        this.state = {
-            done: false,
-            important: false
-        };
-    }
-
-    onLabelClick = () => {
-        this.setState(({done}) => {
-            return {
-                done: !done
-            };
-        });
-    };
-
-    onMarkImportant = () => {
-        this.setState(({important}) => {
-            return {
-                important: !important
-            };
-        });
-    };
 
     render() {
-        const {label, onDeleted} = this.props;
-        const {done, important} = this.state;
+        const {label, onDeleted, onDone, onImportant,
+            done, important} = this.props;
 
         let classNames = "todo-list-item";
         if(done) {
@@ -45,14 +21,14 @@ export default class ListItem extends Component {
             <span className={classNames}>
               <span
                   className="todo-list-item-label"
-                  onClick={this.onLabelClick}
+                  onClick={onDone}
               >
                 {label}
               </span>
 
               <button type="button"
                       className="btn btn-outline-success btn-sm float-right"
-                      onClick={this.onMarkImportant}>
+                      onClick={onImportant}>
                 <i className="fa fa-exclamation"/>
               </button>
 
