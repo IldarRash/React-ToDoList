@@ -13,6 +13,8 @@ export default class App extends Component {
             this.createTodoItem('item1'),
             this.createTodoItem('item2'),
             this.createTodoItem('item3')
+        ],
+        copy: [
         ]
     };
 
@@ -85,6 +87,16 @@ export default class App extends Component {
         });
     };
 
+    onFilter = (word) => {
+        this.setState(({todoData}) => {
+            const newArray = todoData.filter((el) => el.label === word)
+
+            return {
+                copy : newArray
+            };
+        });
+    };
+
     render() {
         const doneCount = this.state.todoData.filter((el) => el.done).length;
 
@@ -94,11 +106,11 @@ export default class App extends Component {
             <div className="todo-app">
                 <AppHeader toDo={importantCount} done={doneCount}/>
                 <div className="top-panel d-flex">
-                    <Search />
+                    <Search wordFilter={this.onFilter}/>
                     <ItemStatusFilter />
                 </div>
                 <TodoList
-                    items = {this.state.todoData}
+                    items = {this.state.copy}
                     onDeleted = {this.deleteItem}
                     onDone = {this.onToggleDone}
                     onImportant = {this.onToggleImportant}
